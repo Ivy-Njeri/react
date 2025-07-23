@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import AboutPage from './pages/AboutPage';
+import AgeVerification from './components/AgeVerification';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage/>} />
         <Route path="/signup" element={<SignupPage />} />
        <Route path="/about" element={<AboutPage/>}/>
+       < Route path="/ageverification" element={<AgeVerification/>}/>
       </Routes>
     </Router>
   );

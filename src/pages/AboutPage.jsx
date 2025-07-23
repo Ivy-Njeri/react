@@ -20,8 +20,9 @@ const AboutPage = () => {
         </div>
       </nav>
 
+        
+      <div className="bg-warm purple shadow-md py-6 px-8 mt-20">
 
-      <div className="bg-white shadow-md py-6 px-8">
         <h1 className="text-4xl font-extrabold text-pink-600 text-center">
           💖 Welcome to LoveConnect
         </h1>
