@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   return (
+   <div
+      className="min-h-screen bg-cover bg-center flex items-center justify-center"
+      style={{
+        backgroundImage: "url('../../public/images/download.jpg')"
+      }}
+    >
     <div className="bg-pink-50 min-h-screen font-sans">
       {/* Navbar */}
       <nav className="bg-white shadow-md fixed w-full top-0 z-50 px-6 py-4 flex justify-between items-center">
@@ -79,6 +85,7 @@ const HomePage = () => {
           <Link to="/support" className="text-pink-500 hover:underline">Support</Link>
         </div>
       </footer>
+    </div>
     </div>
   );
 };
