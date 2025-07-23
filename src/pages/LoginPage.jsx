@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -10,68 +13,88 @@ const LoginPage = () => {
     try {
       const response = await fetch('http://localhost:3001/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
-      alert(data.message); // Show response from server
+
+      if (data.success) {
+        alert(data.message);
+        navigate('/');
+      } else {
+        alert('Invalid email or password');
+      }
     } catch (error) {
-      alert('Login failed: ' + error.message);
+      console.error('Login error:', error);
+      alert('Something went wrong');
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-pink-400 to-pink-300 text-white px-4 text-center w-full">
-      <h1 className="text-4xl font-bold mb-2">💕 Welcome to LoveConnect</h1>
-      <p className="text-lg mb-8">Find your perfect match today</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-pink-300">
+      <div className="bg-white/80 backdrop-blur-sm shadow-xl rounded-3xl p-10 w-full max-w-md">
+        <h2 className="text-3xl font-bold text-center text-pink-600 mb-6">
+          Welcome Back 💘
+        </h2>
+        <form onSubmit={handleLogin} className="space-y-5">
+          <div>
+            <label className="block text-gray-700 text-sm mb-1">Email</label>
+            <input
+              type="email"
+              placeholder="your@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 border border-pink-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              required
+            />
+          </div>
 
-      <form onSubmit={handleLogin} className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm text-gray-800">
-        <input
-          type="email"
-          placeholder="Email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-3 mb-4 rounded-md bg-gray-100 border-none focus:outline-none focus:ring-2 focus:ring-pink-300"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 mb-4 rounded-md bg-gray-100 border-none focus:outline-none focus:ring-2 focus:ring-pink-300"
-        />
+          <div>
+            <label className="block text-gray-700 text-sm mb-1">Password</label>
+            <input
+              type="password"
+              placeholder="Your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border border-pink-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              required
+            />
+          </div>
 
-        <div className="flex justify-between items-center text-sm mb-4 flex-wrap gap-2">
-          <label className="flex items-center gap-1">
-            <input type="checkbox" className="accent-pink-500" />
-            Remember Me
-          </label>
-          <a href="/" className="text-pink-500 hover:underline">
-            Forgot Password?
-          </a>
-        </div>
+          {/* Remember Me + Forgot Password */}
+          <div className="flex items-center justify-between text-sm text-gray-700">
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+                className="form-checkbox accent-pink-500"
+              />
+              <span>Remember me</span>
+            </label>
+            <a href="/forgot-password" className="text-pink-500 hover:underline">
+              Forgot password?
+            </a>
+          </div>
 
-        <button
-          type="submit"
-          className="w-full bg-pink-400 text-white py-3 rounded-md font-semibold hover:bg-pink-500 transition duration-300"
-        >
-          Login
-        </button>
+          <button
+            type="submit"
+            className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-300"
+          >
+            Log In
+          </button>
+        </form>
 
-        <p className="text-center text-sm mt-4">
+        <p className="text-center text-sm text-gray-700 mt-5">
           Don’t have an account?{' '}
-          <a href="/signup" className="text-pink-500 font-bold hover:underline">
-            Sign Up
+          <a href="/signup" className="text-pink-500 hover:underline font-medium">
+            Create one 💗
           </a>
         </p>
-      </form>
+      </div>
     </div>
   );
-};
+}
 
 export default LoginPage;
