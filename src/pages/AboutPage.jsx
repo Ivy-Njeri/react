@@ -16,19 +16,19 @@ const AboutPage = () => {
           <li><Link to="/signup" className="hover:text-pink-500">Join</Link></li>
         </ul>
         <div className="md:hidden">
-          {/* Optional: Add mobile hamburger menu here later */}
+        
         </div>
       </nav>
 
 
-      <header className="bg-white shadow-md py-6 px-8">
+      <div className="bg-white shadow-md py-6 px-8">
         <h1 className="text-4xl font-extrabold text-pink-600 text-center">
           💖 Welcome to LoveConnect
         </h1>
         <p className="text-center text-gray-600 text-lg mt-2">
           Where hearts meet, safely and sincerely.
         </p>
-      </header>
+      </div>
 
       <main className="p-8 max-w-5xl mx-auto space-y-12">
         {/* Section 1: Trust & Safety */}
