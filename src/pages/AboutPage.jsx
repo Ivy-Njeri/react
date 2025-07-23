@@ -1,8 +1,25 @@
 import React from 'react';
 
+
 const AboutPage = () => {
   return (
     <div className="min-h-screen bg-pink-50 text-gray-800 font-sans">
+      {/* ✅ Navbar at the top */}
+       <nav className="bg-white shadow-md fixed w-full top-0 z-50 px-6 py-4 flex justify-between items-center">
+        <div className="text-2xl font-bold text-pink-600">💞 Love Connect</div>
+        <ul className="hidden md:flex space-x-6 text-gray-700 font-medium">
+          <li><Link to="/" className="hover:text-pink-500">Home</Link></li>
+          <li><Link to="/about" className="hover:text-pink-500">About</Link></li>
+          <li><Link to="/contact" className="hover:text-pink-500">Contact</Link></li>
+          <li><Link to="/login" className="hover:text-pink-500">Login</Link></li>
+          <li><Link to="/signup" className="hover:text-pink-500">Join</Link></li>
+        </ul>
+        <div className="md:hidden">
+          {/* Optional: Add mobile hamburger menu here later */}
+        </div>
+      </nav>
+
+
       <header className="bg-white shadow-md py-6 px-8">
         <h1 className="text-4xl font-extrabold text-pink-600 text-center">
           💖 Welcome to LoveConnect
