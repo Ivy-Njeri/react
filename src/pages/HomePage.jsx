@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 const HomePage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const closeMenu = () => setMenuOpen(false); // to close menu after clicking a link
+
   return (
-    <div className="min-h-screen bg-pink-50 relative font-sans">
+    <div className="min-h-screen bg-pink-50 relative font-sans flex flex-col">
       {/* Background Image with overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center z-0"
@@ -38,21 +40,22 @@ const HomePage = () => {
           <li><Link to="/testimonials">Testimonials</Link></li>
           <li><Link to="/support">Support</Link></li>
         </ul>
-
-        {/* Mobile Menu */}
-        {menuOpen && (
-          <ul className="absolute top-16 left-0 w-full bg-white shadow-md p-4 flex flex-col gap-4 md:hidden text-gray-700 font-medium">
-            <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
-            <li><Link to="/signup" onClick={() => setMenuOpen(false)}>Sign Up</Link></li>
-            <li><Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link></li>
-            <li><Link to="/testimonials" onClick={() => setMenuOpen(false)}>Testimonials</Link></li>
-            <li><Link to="/support" onClick={() => setMenuOpen(false)}>Support</Link></li>
-          </ul>
-        )}
       </nav>
 
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <ul className="absolute top-16 left-0 w-full bg-white shadow-md p-4 flex flex-col gap-4 md:hidden text-gray-700 font-medium z-20">
+          <li><Link to="/" onClick={closeMenu}>Home</Link></li>
+          <li><Link to="/signup" onClick={closeMenu}>Sign Up</Link></li>
+          <li><Link to="/login" onClick={closeMenu}>Login</Link></li>
+          <li><Link to="/about" onClick={closeMenu}>About</Link></li>
+          <li><Link to="/testimonials" onClick={closeMenu}>Testimonials</Link></li>
+          <li><Link to="/support" onClick={closeMenu}>Support</Link></li>
+        </ul>
+      )}
+
       {/* Hero Section */}
-      <section className="relative z-10 flex flex-col items-center justify-center text-center px-4 md:px-10 py-24">
+      <section className="relative z-10 flex-grow flex flex-col items-center justify-center text-center px-4 md:px-10 py-24">
         <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg leading-tight">
           Where Real Love Begins 💕
         </h1>
@@ -74,6 +77,11 @@ const HomePage = () => {
           </Link>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-white/90 py-4 text-center text-sm text-gray-600 relative z-10 shadow-inner">
+        © {new Date().getFullYear()} LoveConnect. All rights reserved.
+      </footer>
     </div>
   );
 };
