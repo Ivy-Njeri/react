@@ -37,7 +37,7 @@ function SignupPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-pink-50 via-rose-100 to-purple-100 p-4">
       <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-3xl p-10 w-full max-w-md transition duration-500 hover:shadow-pink-200">
         <h2 className="text-4xl font-extrabold text-center text-rose-600 mb-2 font-[Poppins]">
-          Join LoveLink 💫
+          Join LoveConnect 💞
         </h2>
         <p className="text-center text-gray-600 mb-6 font-light">
           Find meaningful connections and start your love journey today.
