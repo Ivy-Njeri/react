@@ -12,7 +12,8 @@ function SignupPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/signup', {
+      const response = await fetch('/signup', {
+ 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, password }),
@@ -22,7 +23,7 @@ function SignupPage() {
 
       if (data.success) {
         alert(data.message);
-        navigate('/'); // Redirect to homepage
+        navigate('/');
       } else {
         alert(data.message || 'Signup failed');
       }
@@ -33,73 +34,74 @@ function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-pink-300">
-      <div className="bg-white/80 backdrop-blur-sm shadow-xl rounded-3xl p-10 w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-pink-600 mb-6">
-          Create Your Account 💕
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-pink-50 via-rose-100 to-purple-100 p-4">
+      <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-3xl p-10 w-full max-w-md transition duration-500 hover:shadow-pink-200">
+        <h2 className="text-4xl font-extrabold text-center text-rose-600 mb-2 font-[Poppins]">
+          Join LoveLink 💫
         </h2>
-        <form onSubmit={handleSignup} className="space-y-5">
+        <p className="text-center text-gray-600 mb-6 font-light">
+          Find meaningful connections and start your love journey today.
+        </p>
+        
+        <form onSubmit={handleSignup} className="space-y-5 text-sm">
           <div>
-            <label className="block text-gray-700 text-sm mb-1">Username</label>
+            <label className="block text-gray-700 mb-1 font-medium">Your Name</label>
             <input
               type="text"
-              placeholder="Your name"
+              placeholder="e.g. Taylor"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-2 border border-pink-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              className="w-full px-4 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm mb-1">Email</label>
+            <label className="block text-gray-700 mb-1 font-medium">Email Address</label>
             <input
               type="email"
-              placeholder="your@email.com"
+              placeholder="e.g. taylor@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-pink-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              className="w-full px-4 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm mb-1">Password</label>
+            <label className="block text-gray-700 mb-1 font-medium">Password</label>
             <input
               type="password"
-              placeholder="Create a password"
+              placeholder="Create a strong password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-pink-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              className="w-full px-4 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
               required
             />
           </div>
 
-          {/* Remember Me */}
-          <div className="flex items-center text-sm text-gray-700">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-                className="form-checkbox accent-pink-500"
-              />
-              <span>Remember me</span>
-            </label>
+          <div className="flex items-center text-gray-600 text-sm">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+              className="mr-2 accent-pink-500"
+            />
+            <span>Remember me on this device</span>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-300"
+            className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-300 shadow-md hover:shadow-pink-300"
           >
             Sign Up
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-700 mt-5">
+        <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{' '}
-          <a href="/login" className="text-pink-500 hover:underline font-medium">
-            Log In 💗
+          <a href="/login" className="text-rose-500 hover:underline font-medium">
+            Log In
           </a>
         </p>
       </div>
