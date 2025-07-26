@@ -2,8 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 
-
-// Connect to backend socket server
+// Connect to backend
 const socket = io('http://localhost:5000');
 
 const ChatPage = () => {
@@ -15,45 +14,12 @@ const ChatPage = () => {
   const [newMessage, setNewMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
-  const currentUser = 'me'; // Replace with dynamic ID if needed
+  const currentUser = 'me';
 
-  // Auto scroll to latest message
+  // Scroll to bottom when messages update
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
-
-  // Handle notifications
-  const showNotification = (message) => {
-    if (message.sender !== currentUser) {
-      // Optional: Sound
-      const audio = new Audio('/notification.mp3');
-      audio.play().catch(() => {});
-
-      // Optional: Change tab title
-      const originalTitle = document.title;
-      document.title = `💌 New message from ${message.sender}`;
-      setTimeout(() => {
-        document.title = originalTitle;
-      }, 3000);
-    }
-  };
-
-  // Listen for incoming messages
-  useEffect(() => {
-    const handleIncoming = (data) => {
-      setMessages((prev) => [...prev, data]);
-      showNotification(data);
-    };
-
-   socket.on('receive_message', (data) => {
-  setMessages((prevMessages) => [...prevMessages, data]);
-
-  // Show toast
-  toast.info(`📩 New message from ${data.sender}: "${data.message}"`);
-
-  // Play sound
-  showNotification(data);
-});
 
   // Typing simulation
   useEffect(() => {
@@ -63,6 +29,33 @@ const ChatPage = () => {
       return () => clearTimeout(timeout);
     }
   }, [newMessage]);
+
+  // Notification
+  const showNotification = (message) => {
+    if (message.sender !== currentUser) {
+      const audio = new Audio('/notification.mp3');
+      audio.play().catch(() => {});
+      document.title = `💌 New message from ${message.sender}`;
+      setTimeout(() => {
+        document.title = 'Love Connect 💕';
+      }, 3000);
+    }
+  };
+
+  // Incoming message handler
+  useEffect(() => {
+    const handleIncoming = (data) => {
+      setMessages((prev) => [...prev, data]);
+      toast.info(`📩 New message from ${data.sender}: "${data.text}"`);
+      showNotification(data);
+    };
+
+    socket.on('receive_message', handleIncoming);
+
+    return () => {
+      socket.off('receive_message', handleIncoming); // Clean up to prevent duplicate listeners
+    };
+  }, []);
 
   const handleSend = () => {
     if (newMessage.trim() === '') return;
@@ -79,8 +72,8 @@ const ChatPage = () => {
       time: formattedTime,
     };
 
-    // Emit to server
     socket.emit('send_message', messageData);
+    setMessages((prev) => [...prev, messageData]); // Only add locally here
     setNewMessage('');
   };
 
