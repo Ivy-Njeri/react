@@ -14,23 +14,23 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-
 function App() {
   return (
     <Router>
+      
+      <ToastContainer position="top-right" autoClose={5000} pauseOnHover />
+
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-       <Route path="/about" element={<AboutPage/>}/>
-       < Route path="/ageverification" element={<AgeVerification/>}/>
-       <Route path="/support" element={<SupportPage/>}/>
-       <Route path="/testimonials" element={<TestimonialsPage/>}/>
-       <Route path="/profile" element={<ProfilePage/>}/>
-       <Route path="/Matchmaking" element={<MatchmakingPage/>}/>
-       <Route path="/Chats" element={<ChatPage/>}/>
-       <ToastContainer position="top-right" autoClose={5000} pauseOnHover />
-
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/ageverification" element={<AgeVerification />} />
+        <Route path="/support" element={<SupportPage />} />
+        <Route path="/testimonials" element={<TestimonialsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/Matchmaking" element={<MatchmakingPage />} />
+        <Route path="/Chats" element={<ChatPage />} />
       </Routes>
     </Router>
   );
