@@ -9,6 +9,10 @@ import SupportPage from './pages/SupportPage';
 import TestimonialsPage from './pages/TestimonialsPage';
 import ProfilePage from './pages/ProfilePage';
 import MatchmakingPage from './pages/MatchmakingPage';
+import ChatPage from './pages/ChatPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function App() {
@@ -24,6 +28,9 @@ function App() {
        <Route path="/testimonials" element={<TestimonialsPage/>}/>
        <Route path="/profile" element={<ProfilePage/>}/>
        <Route path="/Matchmaking" element={<MatchmakingPage/>}/>
+       <Route path="/Chats" element={<ChatPage/>}/>
+       <ToastContainer position="top-right" autoClose={5000} pauseOnHover />
+
       </Routes>
     </Router>
   );

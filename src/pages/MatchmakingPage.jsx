@@ -8,7 +8,7 @@ const mockProfiles = [
     name: 'Taylor',
     age: 26,
     bio: 'Lover of books, sunsets & good coffee.',
-    photo: '/images/user1.jpg',
+    photo: '/images/Taylor.jpg',
   },
   {
     id: 2,

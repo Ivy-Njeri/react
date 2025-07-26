@@ -38,6 +38,7 @@ const HomePage = () => {
           <li><Link to="/about">About</Link></li>
           <li><Link to="/testimonials">Testimonials</Link></li>
           <li><Link to="/support">Support</Link></li>
+          
 
           {/* Profile Dropdown */}
           <li className="relative">
@@ -64,6 +65,9 @@ const HomePage = () => {
                   <Link to="/settings" className="block px-4 py-2 hover:bg-pink-50">Settings</Link>
                 </li>
                 <li>
+                  <Link to="/chats" className="block px-4 py-2 hover:bg-pink-50">Chat</Link>
+                </li>
+                <li>
                   <button className="block w-full text-left px-4 py-2 hover:bg-pink-50 text-red-500">Sign Out</button>
                 </li>
               </ul>
@@ -83,7 +87,9 @@ const HomePage = () => {
           <li><Link to="/support" onClick={closeMenu}>Support</Link></li>
           <li><Link to="/matchmaking" onClick={closeMenu}>Matchmaking</Link></li>
           <li><Link to="/settings" onClick={closeMenu}>Settings</Link></li>
-          <li><button onClick={closeMenu} className="text-left text-red-500">Sign Out</button></li>
+          <li><Link to="/chats" onClick={closeMenu}>Chat</Link></li>
+
+          <li><button onClick={closeMenu} className="text-left text-red-500">Sign Out</button></li> X 
         </ul>
       )}
 
