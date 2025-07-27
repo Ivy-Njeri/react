@@ -12,6 +12,7 @@ import MatchmakingPage from './pages/MatchmakingPage';
 import ChatPage from './pages/ChatPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SettingsPage from './pages/SettingsPage';
 
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/Matchmaking" element={<MatchmakingPage />} />
         <Route path="/Chats" element={<ChatPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+
       </Routes>
     </Router>
   );

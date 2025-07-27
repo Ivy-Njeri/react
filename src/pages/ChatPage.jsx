@@ -16,12 +16,12 @@ const ChatPage = () => {
   const messagesEndRef = useRef(null);
   const currentUser = 'me';
 
-  // Scroll to bottom when messages update
+  // Scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Typing simulation
+  // Typing detection
   useEffect(() => {
     if (newMessage.length > 0) {
       setIsTyping(true);
@@ -30,7 +30,7 @@ const ChatPage = () => {
     }
   }, [newMessage]);
 
-  // Notification
+  // Notifications
   const showNotification = (message) => {
     if (message.sender !== currentUser) {
       const audio = new Audio('/notification.mp3');
@@ -42,18 +42,20 @@ const ChatPage = () => {
     }
   };
 
-  // Incoming message handler
+  // Listen for messages
   useEffect(() => {
     const handleIncoming = (data) => {
-      setMessages((prev) => [...prev, data]);
-      toast.info(`📩 New message from ${data.sender}: "${data.text}"`);
-      showNotification(data);
+      // Avoid duplicate if you already added it locally
+      if (data.sender !== currentUser) {
+        setMessages((prev) => [...prev, data]);
+        toast.info(`📩 New message from ${data.sender}: "${data.text}"`);
+        showNotification(data);
+      }
     };
 
     socket.on('receive_message', handleIncoming);
-
     return () => {
-      socket.off('receive_message', handleIncoming); // Clean up to prevent duplicate listeners
+      socket.off('receive_message', handleIncoming);
     };
   }, []);
 
@@ -73,7 +75,7 @@ const ChatPage = () => {
     };
 
     socket.emit('send_message', messageData);
-    setMessages((prev) => [...prev, messageData]); // Only add locally here
+    setMessages((prev) => [...prev, messageData]);
     setNewMessage('');
   };
 
@@ -99,15 +101,15 @@ const ChatPage = () => {
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col p-4">
-        <div className="flex-1 overflow-y-auto space-y-3">
+      <div className="flex-1 flex flex-col p-2 sm:p-4 relative">
+        <div className="flex-1 overflow-y-auto space-y-3 pb-28">
           {messages.map((msg, index) => (
             <div
               key={index}
               className={`flex ${msg.sender === currentUser ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-xs md:max-w-md p-3 rounded-lg shadow ${
+                className={`max-w-[75%] p-3 rounded-lg shadow ${
                   msg.sender === currentUser
                     ? 'bg-pink-500 text-white rounded-br-none'
                     : 'bg-white text-gray-900 rounded-bl-none'
@@ -125,7 +127,7 @@ const ChatPage = () => {
         </div>
 
         {/* Input */}
-        <div className="mt-4 flex items-center gap-2">
+        <div className="w-full absolute bottom-0 left-0 p-2 bg-pink-50 border-t border-gray-200 flex gap-2">
           <input
             type="text"
             value={newMessage}

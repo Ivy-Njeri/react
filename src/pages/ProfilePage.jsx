@@ -11,7 +11,7 @@ const ProfilePage = () => {
     location: "Nairobi, Kenya",
     bio: "Lover of art, animals, and meaningful conversations 💕",
     interests: ["Traveling", "Cooking", "Photography", "Hiking"],
-    image: "/images/ss.jpg", 
+    image: "/images/ss.jpg",
   });
 
   const handleEditToggle = () => {
@@ -23,63 +23,47 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-pink-50 font-sans">
+    <div className="min-h-screen bg-gradient-to-tr from-pink-100 via-pink-50 to-rose-100 font-sans">
       {/* Navbar */}
-      <nav className="bg-white shadow p-4 flex justify-between items-center">
-        <div className="text-xl font-bold text-pink-600">LoveConnect 💖</div>
-        <div className="space-x-4">
-          <a href="/" className="text-gray-700 hover:text-pink-600">Home</a>
-          <a href="/testimonials" className="text-gray-700 hover:text-pink-600">Testimonials</a>
-          <a href="/logout" className="text-gray-700 hover:text-pink-600">Logout</a>
+      <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+        <div className="text-2xl font-bold text-rose-600 tracking-wide">
+          Serendate 💘
+        </div>
+        <div className="space-x-6 text-sm">
+          <a href="/" className="text-gray-700 hover:text-rose-500 transition">Home</a>
+          <a href="/testimonials" className="text-gray-700 hover:text-rose-500 transition">Testimonials</a>
+          <a href="/logout" className="text-gray-700 hover:text-rose-500 transition">Logout</a>
         </div>
       </nav>
 
       {/* Profile Card */}
-      <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-2xl shadow-xl">
-        <div className="flex flex-col md:flex-row items-center gap-6">
+      <div className="max-w-4xl mx-auto mt-12 bg-white p-8 rounded-3xl shadow-2xl border border-rose-100">
+        <div className="flex flex-col md:flex-row items-center gap-8">
           <img
             src={profile.image}
             alt="Profile"
-            className="w-40 h-40 object-cover rounded-full shadow-md"
+            className="w-44 h-44 object-cover rounded-full shadow-md ring-4 ring-rose-200"
           />
           <div className="flex-1">
             <div className="flex justify-between items-center">
-              <h2 className="text-3xl font-bold text-pink-600">
-                {profile.name}
-              </h2>
+              <h2 className="text-4xl font-semibold text-rose-600">{profile.name}</h2>
               <button
                 onClick={handleEditToggle}
-                className="flex items-center bg-pink-500 text-white px-4 py-2 rounded-xl hover:bg-pink-600"
+                className="flex items-center bg-rose-500 text-white px-5 py-2 rounded-xl hover:bg-rose-600 transition shadow-sm"
               >
                 <FaEdit className="mr-2" /> {isEditing ? "Cancel" : "Edit"}
               </button>
             </div>
 
             {isEditing ? (
-              <div className="mt-4 space-y-2">
+              <div className="mt-5 space-y-3">
                 <input
                   type="text"
                   name="name"
                   value={profile.name}
                   onChange={handleChange}
                   placeholder="Full Name"
-                  className="w-full p-2 border border-pink-300 rounded"
-                />
-                <input
-                  type="text"
-                  name="bio"
-                  value={profile.bio}
-                  onChange={handleChange}
-                  placeholder="Bio"
-                  className="w-full p-2 border border-pink-300 rounded"
-                />
-                <input
-                  type="text"
-                  name="location"
-                  value={profile.location}
-                  onChange={handleChange}
-                  placeholder="Location"
-                  className="w-full p-2 border border-pink-300 rounded"
+                  className="w-full p-3 border border-rose-200 rounded-lg focus:outline-rose-400"
                 />
                 <input
                   type="text"
@@ -87,11 +71,27 @@ const ProfilePage = () => {
                   value={profile.username}
                   onChange={handleChange}
                   placeholder="Username"
-                  className="w-full p-2 border border-pink-300 rounded"
+                  className="w-full p-3 border border-rose-200 rounded-lg"
+                />
+                <input
+                  type="text"
+                  name="bio"
+                  value={profile.bio}
+                  onChange={handleChange}
+                  placeholder="Bio"
+                  className="w-full p-3 border border-rose-200 rounded-lg"
+                />
+                <input
+                  type="text"
+                  name="location"
+                  value={profile.location}
+                  onChange={handleChange}
+                  placeholder="Location"
+                  className="w-full p-3 border border-rose-200 rounded-lg"
                 />
               </div>
             ) : (
-              <div className="mt-4 text-gray-700 space-y-1">
+              <div className="mt-4 text-gray-700 space-y-2 text-sm">
                 <p><span className="font-semibold">Username:</span> @{profile.username}</p>
                 <p><span className="font-semibold">Age:</span> {profile.age}</p>
                 <p><span className="font-semibold">Gender:</span> {profile.gender}</p>
@@ -103,15 +103,15 @@ const ProfilePage = () => {
         </div>
 
         {/* Interests Section */}
-        <div className="mt-6">
-          <h3 className="text-xl font-bold text-pink-500 mb-2 flex items-center">
+        <div className="mt-8">
+          <h3 className="text-xl font-bold text-rose-500 mb-3 flex items-center">
             <FaHeart className="mr-2" /> Interests
           </h3>
           <div className="flex flex-wrap gap-3">
             {profile.interests.map((interest, index) => (
               <span
                 key={index}
-                className="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm"
+                className="bg-rose-100 text-rose-600 px-4 py-1 rounded-full text-sm shadow-sm"
               >
                 {interest}
               </span>
@@ -121,8 +121,8 @@ const ProfilePage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="mt-10 text-center text-sm text-gray-600 py-4">
-        © {new Date().getFullYear()} LoveConnect. All rights reserved 💘
+      <footer className="mt-16 text-center text-sm text-gray-500 py-5">
+        © {new Date().getFullYear()} Serendate. Built with 💖 to bring hearts together.
       </footer>
     </div>
   );

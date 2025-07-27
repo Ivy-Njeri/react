@@ -13,7 +13,6 @@ function SignupPage() {
 
     try {
       const response = await fetch('/signup', {
- 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, password }),
@@ -34,15 +33,15 @@ function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-pink-50 via-rose-100 to-purple-100 p-4">
-      <div className="bg-white/90 backdrop-blur-md shadow-2xl rounded-3xl p-10 w-full max-w-md transition duration-500 hover:shadow-pink-200">
-        <h2 className="text-4xl font-extrabold text-center text-rose-600 mb-2 font-[Poppins]">
-          Join LoveConnect 💞
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-100 to-rose-200 p-6">
+      <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-10 w-full max-w-md transition duration-300 hover:shadow-rose-200">
+        <h2 className="text-4xl font-bold text-center text-rose-600 mb-2 font-[Poppins]">
+          Create Your Serendate Account 💖
         </h2>
-        <p className="text-center text-gray-600 mb-6 font-light">
-          Find meaningful connections and start your love journey today.
+        <p className="text-center text-gray-600 mb-6 text-sm">
+          Begin your journey to genuine, meaningful connections.
         </p>
-        
+
         <form onSubmit={handleSignup} className="space-y-5 text-sm">
           <div>
             <label className="block text-gray-700 mb-1 font-medium">Your Name</label>
