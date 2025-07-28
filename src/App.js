@@ -13,6 +13,9 @@ import ChatPage from './pages/ChatPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SettingsPage from './pages/SettingsPage';
+import AdminDashboard from './Admin/AdminDashboard';
+ import Reports from './Admin/Reports';
+
 
 
 function App() {
@@ -33,6 +36,11 @@ function App() {
         <Route path="/Matchmaking" element={<MatchmakingPage />} />
         <Route path="/Chats" element={<ChatPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/reports" element={<Reports />} />
+
+      
+
 
       </Routes>
     </Router>
