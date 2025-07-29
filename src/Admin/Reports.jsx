@@ -1,95 +1,111 @@
-import React, { useState } from 'react';
-import AdminLayout from './AdminLayout'; // make sure the path is correct!
+import React from 'react';
+import {
+  Layout,
+  Menu,
+  Typography,
+  Card,
+  Table,
+} from 'antd';
+import {
+  DashboardOutlined,
+  FileTextOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import AdminLayout from './AdminLayout';
+
+const { Sider, Content } = Layout;
+const { Title, Text } = Typography;
 
 const dummyReports = [
   {
     id: 1,
-    reporter: 'Jane Doe',
-    reportedUser: 'Bob Lee',
-    reason: 'Inappropriate messages',
+    type: 'Abuse',
+    reporter: 'Emily Jane',
+    reportedUser: 'John Smith',
+    status: 'Pending',
     date: '2025-07-28',
-    status: 'pending',
   },
   {
     id: 2,
-    reporter: 'John Smith',
-    reportedUser: 'Alice Johnson',
-    reason: 'Fake profile',
+    type: 'Fake Profile',
+    reporter: 'Alice Doe',
+    reportedUser: 'Mark Lee',
+    status: 'Resolved',
     date: '2025-07-27',
-    status: 'resolved',
+  },
+  {
+    id: 3,
+    type: 'Spam',
+    reporter: 'Sarah Blake',
+    reportedUser: 'Peter Pan',
+    status: 'Pending',
+    date: '2025-07-26',
+  },
+];
+
+const columns = [
+  {
+    title: 'Type',
+    dataIndex: 'type',
+    key: 'type',
+  },
+  {
+    title: 'Reporter',
+    dataIndex: 'reporter',
+    key: 'reporter',
+  },
+  {
+    title: 'Reported User',
+    dataIndex: 'reportedUser',
+    key: 'reportedUser',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    render: status => (
+      <span
+        className={`px-3 py-1 rounded-full text-sm font-medium ${
+          status === 'Resolved' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'
+        }`}
+      >
+        {status}
+      </span>
+    ),
+  },
+  {
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
   },
 ];
 
 const Reports = () => {
-  const [reports, setReports] = useState(dummyReports);
-
-  const handleStatusToggle = (id) => {
-    const updatedReports = reports.map((report) =>
-      report.id === id
-        ? {
-            ...report,
-            status: report.status === 'pending' ? 'resolved' : 'pending',
-          }
-        : report
-    );
-    setReports(updatedReports);
-  };
-
   return (
-    <AdminLayout>
-      <div className="p-6">
-        <h2 className="text-4xl font-bold text-pink-600 mb-8 text-center drop-shadow">
-          🚨 User Reports
-        </h2>
-
-        <div className="overflow-x-auto shadow rounded-lg bg-white">
-          <table className="min-w-full text-sm text-left">
-            <thead className="bg-pink-100 text-pink-700">
-              <tr>
-                <th className="p-4">Reporter</th>
-                <th className="p-4">Reported User</th>
-                <th className="p-4">Reason</th>
-                <th className="p-4">Date</th>
-                <th className="p-4">Status</th>
-                <th className="p-4">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reports.map((report) => (
-                <tr
-                  key={report.id}
-                  className="border-t border-pink-100 hover:bg-pink-50 transition"
-                >
-                  <td className="p-4">{report.reporter}</td>
-                  <td className="p-4">{report.reportedUser}</td>
-                  <td className="p-4">{report.reason}</td>
-                  <td className="p-4">{report.date}</td>
-                  <td
-                    className={`p-4 font-medium ${
-                      report.status === 'pending'
-                        ? 'text-yellow-500'
-                        : 'text-green-600'
-                    }`}
-                  >
-                    {report.status}
-                  </td>
-                  <td className="p-4">
-                    <button
-                      onClick={() => handleStatusToggle(report.id)}
-                      className="px-4 py-2 rounded bg-pink-200 text-pink-800 font-semibold hover:bg-pink-300 transition"
-                    >
-                      {report.status === 'pending'
-                        ? 'Mark as Resolved'
-                        : 'Mark as Pending'}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <AdminLayout>
+        <div className="bg-white border-b border-gray-200 p-6">
+          <Title level={4} className="text-purple-700 m-0">
+            User Reports
+          </Title>
+          <Text type="secondary">Manage and review community reports</Text>
         </div>
-      </div>
-    </AdminLayout>
+
+        {/* Table Section */}
+        <Content className="m-6 flex flex-col gap-6">
+          <Card bordered={false} bodyStyle={{ padding: 0 }}>
+            <Table
+              columns={columns}
+              dataSource={dummyReports}
+              rowKey="id"
+              pagination={{ pageSize: 5 }}
+              className="overflow-hidden"
+            />
+          </Card>
+        </Content>
+      </AdminLayout>
+
   );
 };
 

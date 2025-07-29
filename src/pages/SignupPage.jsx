@@ -6,25 +6,41 @@ function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
+  const [location, setLocation] = useState('');
+  const [bio, setBio] = useState('');
+  const [hobby, setHobby] = useState('');
+  const [profilePic, setProfilePic] = useState(null);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('age', age);
+    formData.append('gender', gender);
+    formData.append('location', location);
+    formData.append('bio', bio);
+    formData.append('hobby', hobby);
+    formData.append('email', email);
+    formData.append('password', password);
+    if (profilePic) {
+      formData.append('profilePic', profilePic);
+    }
+
     try {
-      const response = await fetch('/signup', {
+      const response = await fetch('http://localhost:5000/api/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }),
+        body: formData,
       });
-
       const data = await response.json();
-
-      if (data.success) {
-        alert(data.message);
-        navigate('/');
+      if (response.ok) {
+        alert(data.message || 'Signup successful');
+        navigate('/browse');
       } else {
-        alert(data.message || 'Signup failed');
+        alert(data.error || 'Signup failed');
       }
     } catch (error) {
       console.error('Signup error:', error);
@@ -42,7 +58,7 @@ function SignupPage() {
           Begin your journey to genuine, meaningful connections.
         </p>
 
-        <form onSubmit={handleSignup} className="space-y-5 text-sm">
+        <form onSubmit={handleSignup} className="space-y-5 text-sm" encType="multipart/form-data">
           <div>
             <label className="block text-gray-700 mb-1 font-medium">Your Name</label>
             <input
@@ -76,6 +92,78 @@ function SignupPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
               required
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1 font-medium">Age</label>
+            <input
+              type="number"
+              placeholder="e.g. 25"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              className="w-full px-4 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1 font-medium">Gender</label>
+            <select
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="w-full px-4 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              required
+            >
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1 font-medium">Location</label>
+            <input
+              type="text"
+              placeholder="e.g. Nairobi"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full px-4 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1 font-medium">Bio</label>
+            <textarea
+              placeholder="Tell us about yourself"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              className="w-full px-4 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1 font-medium">Hobby</label>
+            <input
+              type="text"
+              placeholder="e.g. Reading, Hiking"
+              value={hobby}
+              onChange={(e) => setHobby(e.target.value)}
+              className="w-full px-4 py-2 border border-pink-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-1 font-medium">Profile Picture</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setProfilePic(e.target.files[0])}
+              className="w-full"
             />
           </div>
 

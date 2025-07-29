@@ -10,7 +10,10 @@ const TestimonialsPage = () => {
     <>
       {/* ✅ Navbar */}
       <nav className="relative z-50 flex items-center justify-between px-6 py-4 bg-white/80 shadow-md">
-        <div className="text-2xl font-bold text-pink-600">💞 LoveConnect</div>
+        <div className="text-2xl font-bold text-pink-600 flex items-center gap-2">
+          <span>Serendate</span>
+          <span className="text-red-500">❤️</span>
+        </div>
 
         <div className="md:hidden">
           <button onClick={() => setMenuOpen(!menuOpen)} className="text-pink-600">

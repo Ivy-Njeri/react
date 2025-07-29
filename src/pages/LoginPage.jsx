@@ -11,7 +11,7 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3001/login', {
+      const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -19,11 +19,14 @@ function LoginPage() {
 
       const data = await response.json();
 
-      if (data.success) {
-        alert(data.message);
-        navigate('/');
+      if (response.ok) {
+        // ✅ Store login state
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userEmail", email); // Optional: store email too
+        alert(data.message || 'Login successful');
+        navigate('/browse');
       } else {
-        alert('Invalid email or password');
+        alert(data.error || 'Invalid email or password');
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -62,7 +65,6 @@ function LoginPage() {
             />
           </div>
 
-          {/* Remember Me + Forgot Password */}
           <div className="flex items-center justify-between text-sm text-gray-700">
             <label className="flex items-center space-x-2">
               <input
