@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -11,7 +11,8 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
+      const response = await fetch('http://192.168.100.5:5000/api/login', {
+        // ⬆️ Replace with your actual IP address (same network as your phone)
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -20,9 +21,8 @@ function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // ✅ Store login state
         localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userEmail", email); // Optional: store email too
+        localStorage.setItem("userEmail", email);
         alert(data.message || 'Login successful');
         navigate('/browse');
       } else {
@@ -75,9 +75,9 @@ function LoginPage() {
               />
               <span>Remember me</span>
             </label>
-            <a href="/forgot-password" className="text-pink-500 hover:underline">
+            <Link to="/forgot-password" className="text-pink-500 hover:underline">
               Forgot password?
-            </a>
+            </Link>
           </div>
 
           <button
@@ -90,9 +90,9 @@ function LoginPage() {
 
         <p className="text-center text-sm text-gray-700 mt-5">
           Don’t have an account?{' '}
-          <a href="/signup" className="text-pink-500 hover:underline font-medium">
+          <Link to="/signup" className="text-pink-500 hover:underline font-medium">
             Create one 💗
-          </a>
+          </Link>
         </p>
       </div>
     </div>

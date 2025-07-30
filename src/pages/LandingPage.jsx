@@ -19,9 +19,9 @@ const LandingPage = () => {
     <div className="min-h-screen bg-pink-50 text-gray-800 font-sans">
       {/* Navigation Bar */}
       <header className="bg-white shadow-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap md:flex-nowrap justify-between items-center">
           <motion.h1
-            className="text-3xl font-extrabold text-pink-600"
+            className="text-3xl font-extrabold text-pink-600 w-full md:w-auto text-center md:text-left mb-4 md:mb-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
@@ -29,24 +29,23 @@ const LandingPage = () => {
             Serendate 💞
           </motion.h1>
 
-          <nav className="flex space-x-6 items-center relative">
+          <nav className="flex flex-col md:flex-row md:space-x-6 items-center w-full md:w-auto space-y-2 md:space-y-0 relative">
             <Link to="/" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
             <Link to="/about" className="text-gray-700 hover:text-pink-600 transition">About</Link>
             {!isLoggedIn && (
-              <Link to="/login">
-                <button className="bg-pink-500 text-white px-5 py-2 rounded-full hover:bg-pink-600 transition">
+              <Link to="/login" className="w-full md:w-auto">
+                <button className="w-full md:w-auto bg-pink-500 text-white px-5 py-2 rounded-full hover:bg-pink-600 transition">
                   Login
                 </button>
               </Link>
             )}
             {!isLoggedIn && (
-              <Link to="/signup">
-                <button className="bg-pink-500 text-white px-5 py-2 rounded-full hover:bg-pink-600 transition">
+              <Link to="/signup" className="w-full md:w-auto">
+                <button className="w-full md:w-auto bg-pink-500 text-white px-5 py-2 rounded-full hover:bg-pink-600 transition">
                   Join Now
                 </button>
               </Link>
             )}
-            {/* Profile dropdown icon */}
             {isLoggedIn && (
               <div className="relative">
                 <button
@@ -95,9 +94,9 @@ const LandingPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-pink-100 py-20 text-center">
+      <section className="bg-pink-100 py-20 text-center px-4">
         <motion.h2
-          className="text-5xl font-bold text-pink-600 mb-4 flex justify-center items-center gap-2"
+          className="text-4xl sm:text-5xl font-bold text-pink-600 mb-4 flex justify-center items-center gap-2"
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1 }}
@@ -116,14 +115,14 @@ const LandingPage = () => {
           </motion.span>
         </motion.h2>
 
-        <p className="text-xl text-gray-700">Where real connections bloom in a safe and loving space.</p>
-        <p className="mt-4 italic text-pink-700 text-lg">“Because love should feel like serendipity.”</p>
+        <p className="text-lg sm:text-xl text-gray-700">Where real connections bloom in a safe and loving space.</p>
+        <p className="mt-4 italic text-pink-700 text-base sm:text-lg">“Because love should feel like serendipity.”</p>
       </section>
 
-        {/* Why Choose Us */}
-      <section className="py-16 px-6 md:px-20 bg-white">
+      {/* Why Choose Us */}
+      <section className="py-16 px-4 md:px-20 bg-white">
         <h3 className="text-3xl font-bold text-center text-pink-600 mb-10">Why Choose Serendate?</h3>
-        <div className="grid md:grid-cols-3 gap-10 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 text-center">
           <div>
             <FaHeart className="text-pink-500 text-5xl mx-auto mb-4" />
             <h4 className="font-bold text-xl mb-2">Genuine Connections</h4>
@@ -145,11 +144,11 @@ const LandingPage = () => {
       {/* How It Works Section */}
       <section className="py-16 bg-pink-50 text-center px-4 md:px-24">
         <h3 className="text-3xl font-bold text-pink-600 mb-8">How It Works</h3>
-        <p className="mb-6 text-gray-700 text-lg">
+        <p className="mb-6 text-gray-700 text-base sm:text-lg">
           Create your profile, explore matches, chat, share moments, and discover love—naturally.
         </p>
         <div className="flex justify-center">
-          <video width="500" className="rounded-lg shadow-lg" controls>
+          <video width="100%" className="rounded-lg shadow-lg max-w-md sm:max-w-xl" controls>
             <source src="/assets/how-it-works.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -165,4 +164,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
