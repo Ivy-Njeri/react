@@ -5,32 +5,38 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
+    setError('');
     try {
-      const response = await fetch('http://192.168.100.5:5000/api/login', {
-        // ⬆️ Replace with your actual IP address (same network as your phone)
+      const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userEmail", email);
-        alert(data.message || 'Login successful');
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
+        if (rememberMe) {
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          localStorage.removeItem('rememberMe');
+        }
+        setLoading(false);
         navigate('/browse');
       } else {
-        alert(data.error || 'Invalid email or password');
+        setError(data.error || 'Invalid email or password');
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      alert('Something went wrong');
+    } catch (err) {
+      setError('Network error. Please try again.');
+      setLoading(false);
     }
   };
 
@@ -80,11 +86,18 @@ function LoginPage() {
             </Link>
           </div>
 
+          {error && (
+            <div className="text-red-500 text-sm text-center">{error}</div>
+          )}
+
           <button
             type="submit"
-            className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-300"
+            className={`w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-300 ${
+              loading ? 'opacity-60 cursor-not-allowed' : ''
+            }`}
+            disabled={loading}
           >
-            Log In
+            {loading ? 'Logging in...' : 'Log In'}
           </button>
         </form>
 

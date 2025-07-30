@@ -12,10 +12,12 @@ function SignupPage() {
   const [bio, setBio] = useState('');
   const [hobby, setHobby] = useState('');
   const [profilePic, setProfilePic] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formData = new FormData();
     formData.append('username', username);
@@ -39,6 +41,8 @@ function SignupPage() {
       const data = await response.json();
 
       if (response.ok) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
         alert(data.message || 'Signup successful!');
         navigate('/browse');
       } else {
@@ -47,6 +51,8 @@ function SignupPage() {
     } catch (error) {
       console.error('Signup error:', error);
       alert('An error occurred. Please check your connection and try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,7 +71,6 @@ function SignupPage() {
           <Input label="Email Address" type="email" value={email} onChange={setEmail} placeholder="e.g. taylor@email.com" required />
           <Input label="Password" type="password" value={password} onChange={setPassword} placeholder="Create a strong password" required />
           <Input label="Age" type="number" value={age} onChange={setAge} placeholder="e.g. 25" required />
-          
           <div>
             <label className="block text-gray-700 mb-1 font-medium">Gender</label>
             <select
@@ -80,9 +85,7 @@ function SignupPage() {
               <option value="other">Other</option>
             </select>
           </div>
-
           <Input label="Location" value={location} onChange={setLocation} placeholder="e.g. Nairobi" required />
-          
           <div>
             <label className="block text-gray-700 mb-1 font-medium">Bio</label>
             <textarea
@@ -93,9 +96,7 @@ function SignupPage() {
               required
             />
           </div>
-
           <Input label="Hobby" value={hobby} onChange={setHobby} placeholder="e.g. Reading, Hiking" required />
-
           <div>
             <label className="block text-gray-700 mb-1 font-medium">Profile Picture</label>
             <input
@@ -105,7 +106,6 @@ function SignupPage() {
               className="w-full"
             />
           </div>
-
           <div className="flex items-center text-gray-600">
             <input
               type="checkbox"
@@ -115,12 +115,12 @@ function SignupPage() {
             />
             <span>Remember me on this device</span>
           </div>
-
           <button
             type="submit"
             className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-300 shadow-md hover:shadow-pink-300"
+            disabled={loading}
           >
-            Sign Up
+            {loading ? 'Signing Up...' : 'Sign Up'}
           </button>
         </form>
 
