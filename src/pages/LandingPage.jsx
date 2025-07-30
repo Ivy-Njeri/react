@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FaHeart, FaUserFriends, FaComments, FaUserCircle, FaChevronDown } from 'react-icons/fa';
+import { FaHeart, FaUserFriends, FaComments, FaUserCircle, FaChevronDown, FaBars, FaTimes } from 'react-icons/fa';
+import logo from '../assets/loveconnect.png';
 
 const LandingPage = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('isLoggedIn') === 'true');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleStorage = () => {
@@ -15,32 +17,52 @@ const LandingPage = () => {
     return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
+  // Close menu on navigation
+  const handleNavClick = () => {
+    setMenuOpen(false);
+    setShowDropdown(false);
+  };
+
   return (
     <div className="min-h-screen bg-pink-50 text-gray-800 font-sans">
       {/* Navigation Bar */}
       <header className="bg-white shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap md:flex-nowrap justify-between items-center">
-          <motion.h1
-            className="text-3xl font-extrabold text-pink-600 w-full md:w-auto text-center md:text-left mb-4 md:mb-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            Serendate 💞
-          </motion.h1>
+            <div className="flex items-center space-x-2 mb-4 md:mb-0">
+  <img src={logo} alt="loveconnect.png" className="h-10 w-auto" />
+  <motion.h1
+    className="text-3xl font-extrabold text-pink-600"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}
+  >
+    Serendate 
+  </motion.h1>
+</div>
 
-          <nav className="flex flex-col md:flex-row md:space-x-6 items-center w-full md:w-auto space-y-2 md:space-y-0 relative">
-            <Link to="/" className="text-gray-700 hover:text-pink-600 transition">Home</Link>
-            <Link to="/about" className="text-gray-700 hover:text-pink-600 transition">About</Link>
+
+          {/* Hamburger Icon for mobile */}
+          <button
+            className="md:hidden ml-auto text-pink-600 text-3xl focus:outline-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex flex-row md:space-x-6 items-center w-full md:w-auto space-y-0 relative">
+            <Link to="/" className="text-gray-700 hover:text-pink-600 transition" onClick={handleNavClick}>Home</Link>
+            <Link to="/about" className="text-gray-700 hover:text-pink-600 transition" onClick={handleNavClick}>About</Link>
             {!isLoggedIn && (
-              <Link to="/login" className="w-full md:w-auto">
+              <Link to="/login" className="w-full md:w-auto" onClick={handleNavClick}>
                 <button className="w-full md:w-auto bg-pink-500 text-white px-5 py-2 rounded-full hover:bg-pink-600 transition">
                   Login
                 </button>
               </Link>
             )}
             {!isLoggedIn && (
-              <Link to="/signup" className="w-full md:w-auto">
+              <Link to="/signup" className="w-full md:w-auto" onClick={handleNavClick}>
                 <button className="w-full md:w-auto bg-pink-500 text-white px-5 py-2 rounded-full hover:bg-pink-600 transition">
                   Join Now
                 </button>
@@ -60,18 +82,21 @@ const LandingPage = () => {
                     <Link
                       to="/profile"
                       className="block px-4 py-2 text-sm hover:bg-pink-100 text-gray-700"
+                      onClick={handleNavClick}
                     >
                       My Profile
                     </Link>
                     <Link
                       to="/chats"
                       className="block px-4 py-2 text-sm hover:bg-pink-100 text-gray-700"
+                      onClick={handleNavClick}
                     >
                       Chats
                     </Link>
                     <Link
                       to="/settings"
                       className="block px-4 py-2 text-sm hover:bg-pink-100 text-gray-700"
+                      onClick={handleNavClick}
                     >
                       Settings
                     </Link>
@@ -80,6 +105,7 @@ const LandingPage = () => {
                         localStorage.removeItem('isLoggedIn');
                         setIsLoggedIn(false);
                         setShowDropdown(false);
+                        setMenuOpen(false);
                       }}
                       className="block px-4 py-2 text-sm hover:bg-pink-100 text-gray-700 cursor-pointer"
                     >
@@ -90,6 +116,63 @@ const LandingPage = () => {
               </div>
             )}
           </nav>
+
+          {/* Mobile Nav */}
+          {menuOpen && (
+            <nav className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg rounded-b-xl py-4 z-40 flex flex-col items-center animate-fade-in">
+              <Link to="/" className="text-gray-700 hover:text-pink-600 transition py-2 w-full text-center" onClick={handleNavClick}>Home</Link>
+              <Link to="/about" className="text-gray-700 hover:text-pink-600 transition py-2 w-full text-center" onClick={handleNavClick}>About</Link>
+              {!isLoggedIn && (
+                <Link to="/login" className="w-full" onClick={handleNavClick}>
+                  <button className="w-full bg-pink-500 text-white px-5 py-2 rounded-full hover:bg-pink-600 transition my-2">
+                    Login
+                  </button>
+                </Link>
+              )}
+              {!isLoggedIn && (
+                <Link to="/signup" className="w-full" onClick={handleNavClick}>
+                  <button className="w-full bg-pink-500 text-white px-5 py-2 rounded-full hover:bg-pink-600 transition my-2">
+                    Join Now
+                  </button>
+                </Link>
+              )}
+              {isLoggedIn && (
+                <div className="w-full flex flex-col items-center">
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-sm hover:bg-pink-100 text-gray-700 w-full text-center"
+                    onClick={handleNavClick}
+                  >
+                    My Profile
+                  </Link>
+                  <Link
+                    to="/chats"
+                    className="block px-4 py-2 text-sm hover:bg-pink-100 text-gray-700 w-full text-center"
+                    onClick={handleNavClick}
+                  >
+                    Chats
+                  </Link>
+                  <Link
+                    to="/settings"
+                    className="block px-4 py-2 text-sm hover:bg-pink-100 text-gray-700 w-full text-center"
+                    onClick={handleNavClick}
+                  >
+                    Settings
+                  </Link>
+                  <span
+                    onClick={() => {
+                      localStorage.removeItem('isLoggedIn');
+                      setIsLoggedIn(false);
+                      setMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 text-sm hover:bg-pink-100 text-gray-700 cursor-pointer w-full text-center"
+                  >
+                    Logout
+                  </span>
+                </div>
+              )}
+            </nav>
+          )}
         </div>
       </header>
 
