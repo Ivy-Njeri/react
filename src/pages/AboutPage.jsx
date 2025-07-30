@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
+import logo from '../assets/loveconnect.png';
 
 const AboutPage = () => {
   return (
@@ -11,9 +12,16 @@ const AboutPage = () => {
         <div className="text-2xl font-bold text-pink-600 flex items-center space-x-2">
            {/* Logo */}
           <div className="text-2xl font-bold text-pink-600 flex items-center gap-2">
-            <Heart className="text-red-500 animate-pulse" />
-            Serendate
-          </div>
+            <img src={logo} alt="loveconnect.png" className="h-10 w-auto" />
+<motion.h1
+  className="text-3xl font-extrabold text-pink-600 w-full md:w-auto text-center md:text-left mb-4 md:mb-0"
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 1 }}
+>
+  Serendate 💞
+</motion.h1>
+            </div>
 
         </div>
         <nav className="space-x-4">

@@ -240,7 +240,7 @@ const LandingPage = () => {
 
       {/* Footer */}
       <footer className="bg-white border-t text-center p-6 mt-10 text-sm text-gray-500">
-        © {new Date().getFullYear()} Serendate — Love, Unscripted..
+        © {new Date().getFullYear()} Serendate — Where Stars align✨.
       </footer>
     </div>
   );
