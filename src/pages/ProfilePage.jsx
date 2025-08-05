@@ -15,6 +15,16 @@ const ProfilePage = () => {
     bio: "",
     hobby: "",
     profile_pic: "",
+    gallery: [], // Array of image URLs
+    relationship_type: "",
+    height: "",
+    education: "",
+    occupation: "",
+    smoking: "",
+    drinking: "",
+    exercise: "",
+    religion: "",
+    family_goals: "",
   });
   const [originalProfile, setOriginalProfile] = useState({});
 
@@ -129,7 +139,17 @@ const ProfilePage = () => {
           location: profile.location,
           bio: profile.bio,
           hobby: profile.hobby,
-          profile_pic: profile.profile_pic
+          profile_pic: profile.profile_pic,
+          relationship_type: profile.relationship_type,
+          height: profile.height,
+          education: profile.education,
+          occupation: profile.occupation,
+          smoking: profile.smoking,
+          drinking: profile.drinking,
+          exercise: profile.exercise,
+          religion: profile.religion,
+          family_goals: profile.family_goals,
+          gallery: profile.gallery,
         }),
       });
 
@@ -186,35 +206,35 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-rose-50 to-purple-100 flex flex-col">
       {/* Navbar */}
-      <nav className="bg-white/80 backdrop-blur-md shadow-lg px-6 py-4 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold text-rose-600 tracking-wide">
-            Serendate 💘
+      <nav className="bg-white/90 shadow-lg px-4 py-3 sticky top-0 z-50 backdrop-blur-md">
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-4 text-base">
+            <a href="/" className="hover:text-rose-500 transition font-medium">Home</a>
+            <a href="/about" className="hover:text-rose-500 transition font-medium">About</a>
+            <a href="/support" className="hover:text-rose-500 transition font-medium">Support</a>
+            <a href="/matches" className="hover:text-rose-500 transition font-medium">Matches</a>
+            <a href="/testimonials" className="hover:text-rose-500 transition font-medium">Testimonials</a>
+            <a href="/logout" className="hover:text-rose-500 transition font-medium">Logout</a>
           </div>
-          <div className="space-x-6 text-sm">
-            <a href="/" className="text-gray-700 hover:text-rose-500 transition duration-200">Home</a>
-            <a href="/matches" className="text-gray-700 hover:text-rose-500 transition duration-200">Matches</a>
-            <a href="/testimonials" className="text-gray-700 hover:text-rose-500 transition duration-200">Testimonials</a>
-            <a href="/logout" className="text-gray-700 hover:text-rose-500 transition duration-200">Logout</a>
+          <div className="flex items-center gap-2 ml-6">
+            <span className="text-xl font-bold text-rose-600 tracking-wide font-serif drop-shadow">Serendate</span>
+            <img src={require('../assets/loveconnect.png')} alt="Serendate Logo" className="w-9 h-9 rounded-full bg-white p-1 shadow" />
           </div>
         </div>
       </nav>
-
       {/* Profile Card */}
-      <div className="max-w-4xl mx-auto mt-8 p-6">
-        <div className="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-2xl border border-rose-100 hover:shadow-3xl transition-all duration-300">
-          <div className="flex flex-col lg:flex-row items-start gap-8">
-            {/* Profile Image */}
-            <div className="relative">
+      <main className="flex-1 flex items-center justify-center py-8 px-2">
+        <section className="w-full max-w-3xl bg-white/95 rounded-3xl shadow-2xl border border-rose-100 p-6 md:p-10 flex flex-col md:flex-row gap-10 md:gap-14 backdrop-blur-md">
+          {/* Profile Image & Gallery */}
+          <div className="flex flex-col items-center gap-6 md:w-1/3">
+            <div className="relative group">
               <img
-                src={profile.profile_pic || "/images/default-avatar.jpg"}
+                src={profile.profile_pic || '/images/default-avatar.jpg'}
                 alt="Profile"
-                className="w-48 h-48 object-cover rounded-2xl shadow-lg ring-4 ring-rose-200 hover:ring-rose-300 transition-all duration-300"
-                onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/200x200/f3f4f6/9ca3af?text=No+Image";
-                }}
+                className="w-36 h-36 md:w-44 md:h-44 object-cover rounded-2xl shadow-lg ring-4 ring-rose-200 group-hover:ring-rose-400 transition-all duration-300 bg-gray-100"
+                onError={e => { e.target.src = 'https://via.placeholder.com/200x200/f3f4f6/9ca3af?text=No+Image'; }}
               />
               {isEditing && (
                 <button className="absolute bottom-2 right-2 bg-rose-500 text-white p-2 rounded-full hover:bg-rose-600 transition shadow-lg">
@@ -222,192 +242,122 @@ const ProfilePage = () => {
                 </button>
               )}
             </div>
-
-            {/* Profile Info */}
-            <div className="flex-1 w-full">
-              <div className="flex justify-between items-start mb-6">
-                <h2 className="text-4xl font-bold text-gray-800 bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
-                  {profile.username ? `@${profile.username}` : "No username"}
-                </h2>
-                
-                {isEditing ? (
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleSave}
-                      disabled={saving}
-                      className="flex items-center bg-green-500 text-white px-5 py-2 rounded-xl hover:bg-green-600 transition shadow-lg disabled:opacity-50"
-                    >
-                      <Save size={16} className="mr-2" />
-                      {saving ? 'Saving...' : 'Save'}
-                    </button>
-                    <button
-                      onClick={handleCancel}
-                      className="flex items-center bg-gray-500 text-white px-5 py-2 rounded-xl hover:bg-gray-600 transition shadow-lg"
-                    >
-                      <X size={16} className="mr-2" />
-                      Cancel
-                    </button>
-                  </div>
-                ) : (
+            {/* Gallery Thumbnails */}
+            {profile.gallery && profile.gallery.length > 0 && (
+              <div className="flex flex-wrap gap-2 justify-center">
+                {profile.gallery.map((img, idx) => (
+                  <img key={idx} src={img} alt="Gallery" className="w-14 h-14 object-cover rounded-lg border shadow" />
+                ))}
+              </div>
+            )}
+          </div>
+          {/* Profile Info */}
+          <div className="flex-1 flex flex-col gap-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent font-serif tracking-tight">
+                {profile.username ? `@${profile.username}` : 'No username'}
+              </h2>
+              {isEditing ? (
+                <div className="flex gap-2">
                   <button
-                    onClick={handleEditToggle}
-                    className="flex items-center bg-gradient-to-r from-rose-500 to-pink-500 text-white px-6 py-3 rounded-xl hover:from-rose-600 hover:to-pink-600 transition shadow-lg transform hover:scale-105"
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="flex items-center bg-green-500 text-white px-5 py-2 rounded-xl hover:bg-green-600 transition shadow-lg disabled:opacity-50"
                   >
-                    <Edit size={16} className="mr-2" />
-                    Edit Profile
+                    <Save size={16} className="mr-2" />
+                    {saving ? 'Saving...' : 'Save'}
                   </button>
+                  <button
+                    onClick={handleCancel}
+                    className="flex items-center bg-gray-500 text-white px-5 py-2 rounded-xl hover:bg-gray-600 transition shadow-lg"
+                  >
+                    <X size={16} className="mr-2" />
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={handleEditToggle}
+                  className="flex items-center bg-gradient-to-r from-rose-500 to-pink-500 text-white px-6 py-3 rounded-xl hover:from-rose-600 hover:to-pink-600 transition shadow-lg transform hover:scale-105"
+                >
+                  <Edit size={16} className="mr-2" />
+                  Edit Profile
+                </button>
+              )}
+            </div>
+            {/* Bio & About */}
+            <div className="space-y-2">
+              <div className="flex flex-wrap gap-4 text-base text-gray-700">
+                <span className="flex items-center"><Mail size={16} className="mr-2 text-rose-500" />{profile.email || 'No email'}</span>
+                <span className="flex items-center"><Calendar size={16} className="mr-2 text-rose-500" />{profile.age || 'No age'}</span>
+                <span className="flex items-center"><Users size={16} className="mr-2 text-rose-500" />{profile.gender || 'No gender'}</span>
+                <span className="flex items-center"><MapPin size={16} className="mr-2 text-rose-500" />{profile.location || 'No location'}</span>
+              </div>
+              <div className="mt-2">
+                <p className="font-semibold text-rose-600 mb-1">Bio:</p>
+                <p className="text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-lg min-h-[56px]">
+                  {profile.bio || 'No bio available yet. Click edit to add one!'}
+                </p>
+              </div>
+            </div>
+            {/* Interests Section */}
+            <div>
+              <h3 className="text-lg font-bold text-rose-500 mb-2 flex items-center"><Heart size={20} className="mr-2" />Interests & Hobbies</h3>
+              <div className="flex flex-wrap gap-2">
+                {getInterestsArray().length > 0 ? (
+                  getInterestsArray().map((interest, index) => (
+                    <span key={index} className="bg-gradient-to-r from-rose-100 to-pink-100 text-rose-700 px-4 py-2 rounded-full text-sm shadow-sm border border-rose-200 hover:shadow-md transition-all duration-200 transform hover:scale-105">
+                      {interest}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-gray-400 italic">No interests added yet</span>
                 )}
               </div>
-
-              {isEditing ? (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="relative">
-                      <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                      <input
-                        type="text"
-                        name="username"
-                        value={profile.username || ""}
-                        onChange={handleChange}
-                        placeholder="Username"
-                        className="w-full pl-12 pr-4 py-4 border border-rose-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition"
-                      />
-                    </div>
-                    <div className="relative">
-                      <Mail size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                      <input
-                        type="email"
-                        name="email"
-                        value={profile.email || ""}
-                        onChange={handleChange}
-                        placeholder="Email"
-                        className="w-full pl-12 pr-4 py-4 border border-rose-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition"
-                      />
-                    </div>
-                    <div className="relative">
-                      <Calendar size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                      <input
-                        type="number"
-                        name="age"
-                        value={profile.age || ""}
-                        onChange={handleChange}
-                        placeholder="Age"
-                        min="18"
-                        max="100"
-                        className="w-full pl-12 pr-4 py-4 border border-rose-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition"
-                      />
-                    </div>
-                    <div className="relative">
-                      <Users size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                      <select
-                        name="gender"
-                        value={profile.gender || ""}
-                        onChange={handleChange}
-                        className="w-full pl-12 pr-4 py-4 border border-rose-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition appearance-none"
-                      >
-                        <option value="">Select Gender</option>
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                        <option value="Non-binary">Non-binary</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="relative">
-                    <MapPin size={20} className="absolute left-3 top-4 text-gray-400" />
-                    <input
-                      type="text"
-                      name="location"
-                      value={profile.location || ""}
-                      onChange={handleChange}
-                      placeholder="Location"
-                      className="w-full pl-12 pr-4 py-4 border border-rose-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition"
-                    />
-                  </div>
-                  <textarea
-                    name="bio"
-                    value={profile.bio || ""}
-                    onChange={handleChange}
-                    placeholder="Tell us about yourself..."
-                    rows={3}
-                    className="w-full p-4 border border-rose-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition resize-none"
-                  />
-                  <input
-                    type="text"
-                    name="hobby"
-                    value={profile.hobby || ""}
-                    onChange={handleInterestsChange}
-                    placeholder="Hobbies (separate with commas)"
-                    className="w-full p-4 border border-rose-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 focus:border-transparent transition"
-                  />
-                </div>
-              ) : (
-                <div className="space-y-4 text-gray-700">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                    <p className="flex items-center">
-                      <Mail size={16} className="mr-2 text-rose-500" />
-                      <span className="font-semibold text-rose-600 mr-2">Email:</span> 
-                      {profile.email || "Not provided"}
-                    </p>
-                    <p className="flex items-center">
-                      <Calendar size={16} className="mr-2 text-rose-500" />
-                      <span className="font-semibold text-rose-600 mr-2">Age:</span> 
-                      {profile.age || "Not provided"}
-                    </p>
-                    <p className="flex items-center">
-                      <Users size={16} className="mr-2 text-rose-500" />
-                      <span className="font-semibold text-rose-600 mr-2">Gender:</span> 
-                      {profile.gender || "Not specified"}
-                    </p>
-                    <p className="flex items-center">
-                      <MapPin size={16} className="mr-2 text-rose-500" />
-                      <span className="font-semibold text-rose-600 mr-2">Location:</span> 
-                      {profile.location || "Not provided"}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-rose-600 mb-2">Bio:</p>
-                    <p className="text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-lg">
-                      {profile.bio || "No bio available yet. Click edit to add one!"}
-                    </p>
-                  </div>
-                </div>
-              )}
             </div>
-          </div>
-
-          {/* Interests Section */}
-          <div className="mt-8 pt-8 border-t border-rose-100">
-            <h3 className="text-xl font-bold text-rose-500 mb-4 flex items-center">
-              <Heart size={20} className="mr-2" />
-              Interests & Hobbies
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {getInterestsArray().length > 0 ? (
-                getInterestsArray().map((interest, index) => (
-                  <span
-                    key={index}
-                    className="bg-gradient-to-r from-rose-100 to-pink-100 text-rose-700 px-4 py-2 rounded-full text-sm shadow-sm border border-rose-200 hover:shadow-md transition-all duration-200 transform hover:scale-105"
-                  >
-                    {interest}
-                  </span>
-                ))
-              ) : (
-                <div className="text-center w-full py-8">
-                  <Heart size={40} className="mx-auto text-gray-300 mb-2" />
-                  <span className="text-gray-400 italic">No interests added yet</span>
-                  {!isEditing && (
-                    <p className="text-sm text-gray-500 mt-2">Click "Edit Profile" to add your interests!</p>
-                  )}
-                </div>
-              )}
+            {/* Additional Info */}
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+              <span><span className="font-semibold text-rose-600">Looking for:</span> {profile.relationship_type || 'Not specified'}</span>
+              <span><span className="font-semibold text-rose-600">Height:</span> {profile.height || 'Not specified'}</span>
+              <span><span className="font-semibold text-rose-600">Education:</span> {profile.education || 'Not specified'}</span>
+              <span><span className="font-semibold text-rose-600">Occupation:</span> {profile.occupation || 'Not specified'}</span>
+              <span><span className="font-semibold text-rose-600">Smoking:</span> {profile.smoking || 'Not specified'}</span>
+              <span><span className="font-semibold text-rose-600">Drinking:</span> {profile.drinking || 'Not specified'}</span>
+              <span><span className="font-semibold text-rose-600">Exercise:</span> {profile.exercise || 'Not specified'}</span>
+              <span><span className="font-semibold text-rose-600">Religion:</span> {profile.religion || 'Not specified'}</span>
+              <span><span className="font-semibold text-rose-600">Family Goals:</span> {profile.family_goals || 'Not specified'}</span>
             </div>
+            {/* Gallery Upload (edit mode) */}
+            {isEditing && (
+              <div className="mt-4">
+                <label className="block font-semibold mb-2">Photo Gallery</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={async (e) => {
+                    const files = Array.from(e.target.files);
+                    const urls = await Promise.all(files.map(file => new Promise(res => {
+                      const reader = new FileReader();
+                      reader.onload = () => res(reader.result);
+                      reader.readAsDataURL(file);
+                    })));
+                    setProfile({ ...profile, gallery: urls });
+                  }}
+                  className="block mt-2"
+                />
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {profile.gallery && profile.gallery.length > 0 && profile.gallery.map((img, idx) => (
+                    <img key={idx} src={img} alt="Gallery" className="w-16 h-16 object-cover rounded-lg border" />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      </div>
-
+        </section>
+      </main>
       {/* Footer */}
-      <footer className="mt-16 text-center text-sm text-gray-500 py-8 bg-white/50">
+      <footer className="mt-10 text-center text-sm text-gray-500 py-8 bg-white/60">
         <div className="max-w-4xl mx-auto">
           © {new Date().getFullYear()} Serendate. Built with 💖 to bring hearts together.
         </div>
